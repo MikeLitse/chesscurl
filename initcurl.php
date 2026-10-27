@@ -6,7 +6,7 @@
     curl_setopt_array($ch, [
         CURLOPT_HTTPHEADER => $headers,
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,// Follow 301/302 redirects (e.g., trailing slashes)
+        CURLOPT_FOLLOWLOCATION => true,
     ]);
 
     return $ch;
