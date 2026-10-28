@@ -6,6 +6,7 @@
     
     //GET all
     //? is used to pass parameters to the API like method and id
+    /*
     $url="http://localhost/chess/";
 
     curl_setopt_array($ch, [
@@ -14,7 +15,7 @@
         CURLOPT_HTTPGET => true
         
     ]); 
-    
+    */
     //GET single
     //? is used to pass parameters to the API like method and id
     /*
@@ -69,6 +70,31 @@
         
     ]); 
     */
+    //PATCH
+
+    $data=["user" => "mike",
+           "pass" => "litse"
+    ];
+
+    $payload = json_encode($data);
+
+    $idtoupdate=7;
+
+    $url="http://localhost/chess/?" . http_build_query([
+        'method' => 'PATCH',
+        'id' => $idtoupdate
+    ]);
+
+    curl_setopt_array($ch, [
+        
+        CURLOPT_URL => $url,
+        CURLOPT_CUSTOMREQUEST => "PATCH",
+        CURLOPT_POSTFIELDS => $payload,
+        CURLOPT_HTTPHEADER => [
+            "Content-Type: application/json"
+        ]
+        
+    ]); 
     
     $response = curl_exec($ch);
 
@@ -89,9 +115,10 @@
             echo "Created User ID: " . htmlspecialchars((string)($data["id"] ?? '')) . "<br>";
             break;
         case 200:
-            //DELETE
+            //UPDATE OR DELETE
             if (isset($data["rows"])) {
-                echo "Delete Result: " . htmlspecialchars($data["message"]) . "<br>";
+                $prefix = str_contains($data["message"], "deleted") ? "Delete Result: " : "Update Result: ";
+                echo $prefix . htmlspecialchars($data["message"]) . "<br>";
                 echo "Rows affected: " . htmlspecialchars((string)$data["rows"]) . "<br>";
                 break;
             }
