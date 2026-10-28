@@ -1,7 +1,7 @@
 <?php 
     $headers = ["Accept: application/json"];
 
-    $ch = curl_init("http://localhost/chess/");
+    $ch = curl_init();
 
     curl_setopt_array($ch, [
         CURLOPT_HTTPHEADER => $headers,
