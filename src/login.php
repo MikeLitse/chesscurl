@@ -5,7 +5,7 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-        $ch = require "initcurl.php";
+        $ch = require __DIR__ . "/../initcurl.php";
 
         //echo json_encode("it passed");
         $data=[
@@ -39,11 +39,11 @@
         
         if($httpcode === 200){
             session_start();
-            header("Location: ./home.php");
+            header("Location: src/home.php");
             exit;
         }
 
     }
 
 ?>
-<?php require "creds.html" ?>
+<?php require __DIR__ . "/../creds.html" ?>

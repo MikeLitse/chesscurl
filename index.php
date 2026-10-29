@@ -1,8 +1,19 @@
 <?php 
+    $path = trim(parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH), "/");
+    $parts= array_values(array_filter(explode("/", $path)));
+
+    //echo json_encode(["path" => $path, "parts" => $parts, "id_selected" => $parts[1] ?? null]);
+
+    //this doesnt work
+    if($parts[0] != "chesscurl"){
+        //return 404 if any other URL
+        http_response_code(404);
+        exit;
+    }
 
     $ch = require "initcurl.php";
 
-    require_once("login.php");
+    require_once("src/login.php");
 
     $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
