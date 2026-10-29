@@ -11,5 +11,9 @@
 </head>
 <body>
     <h>Welcome to home</h>
+    <form action="logout.php" method="POST">
+        <button>Logout</button>
+    </form>
+    
 </body>
 </html>

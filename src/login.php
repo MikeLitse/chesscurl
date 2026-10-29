@@ -34,18 +34,22 @@
         //status view
         echo "STATUS: " . curl_errno($ch);
         echo "<br>HTTP: " . curl_getinfo($ch, CURLINFO_HTTP_CODE) . "<br>";
-        echo "Hi :" . $data["user"]["username"];
 
         if($response === false){
             die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
+        }else{
+
+            session_start();
+            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+            if($httpcode===202){
+                header("Location: src/home.php");
+                exit;
+            }
+
         }
 
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-        if($httpcode===202){
-            header("Location: src/home.php");
-            exit;
-        }
+        
     }
 
 ?>
