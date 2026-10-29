@@ -29,27 +29,19 @@
 
         $response = curl_exec($ch);
 
+        if ($response === false) {
+            die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
+        }
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        
         $data = json_decode($response, true);//returns array
         
-        //status view
-        echo "STATUS: " . curl_errno($ch);
-        echo "<br>HTTP: " . curl_getinfo($ch, CURLINFO_HTTP_CODE) . "<br>";
-
-        if($response === false){
-            die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
-        }else{
-
+        if($httpcode === 202){
             session_start();
-            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            if($httpcode===202){
-                header("Location: src/home.php");
-                exit;
-            }
-
+            header("Location: src/home.php");
+            exit;
         }
 
-        
     }
 
 ?>
