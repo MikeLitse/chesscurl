@@ -5,7 +5,7 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-        $ch = require "initcurl.php";
+        $ch = require "../initcurl.php";
 
         //echo json_encode("it passed");
         $data=[
@@ -33,33 +33,20 @@
             die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
         }
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        
+
         $data = json_decode($response, true);//returns array
+
+        echo "<h3>Debug Output:</h3>";
+        echo "HTTP Status Code: <strong>$httpcode</strong><br>";
+        echo "Raw Response: <pre>" . htmlspecialchars((string)$response) . "</pre>";
         
-        if($httpcode === 202){
+        if($httpcode === 200){
             session_start();
-            header("Location: src/home.php");
+            header("Location: home.php");
             exit;
         }
 
     }
 
 ?>
-
-<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <form method="POST">
-            <label>Username:</label>
-            <input type="text" name="user" id="user">
-            <label>Password:</label>
-            <input type="password" name="pass" id="pass">
-            <input type="submit" value="Submit">
-        </form>
-    </body>
-    </html>
+<?php require "creds.html" ?>
