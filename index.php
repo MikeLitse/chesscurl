@@ -2,106 +2,7 @@
 
     $ch = require "initcurl.php";
 
-    //can set method and other vars on the url
-    
-    //GET all
-    //? is used to pass parameters to the API like method and id
-    /*
-    $url="http://localhost/chess/";
-
-    curl_setopt_array($ch, [
-        
-        CURLOPT_URL => $url,
-        CURLOPT_HTTPGET => true
-        
-    ]); 
-    */
-    //GET single
-    //? is used to pass parameters to the API like method and id
-    /*
-    $url="http://localhost/chess/?" . http_build_query([
-        'method' => 'GET',
-        'id' => 1
-    ]);
-
-    curl_setopt_array($ch, [
-        
-        CURLOPT_URL => $url,
-        CURLOPT_HTTPGET => true
-        
-    ]); 
-    */
-
-    //POST
-    /*
-    $url="http://localhost/chess/";
-
-    $data=[
-        "user" => "user",
-        "pass" => "pass"
-    ];
-
-    $payload = json_encode($data);
-    
-    curl_setopt_array($ch, [
-        
-        CURLOPT_URL => $url,
-        CURLOPT_POST => true,
-        CURLOPT_POSTFIELDS => $payload,
-        CURLOPT_HTTPHEADER => [
-            "Content-Type: application/json"
-        ]
-        
-    ]);
-    */
-    //DELETE
-    /*
-    $idtodelete = 8;
-
-    $url="http://localhost/chess/?" . http_build_query([
-        'method' => 'DELETE',
-        'id' => $idtodelete
-    ]);
-
-    curl_setopt_array($ch, [
-        
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => "DELETE"
-        
-    ]); 
-    */
-    //PATCH
-
-    $data=["user" => "mike",
-           "pass" => "litse"
-    ];
-
-    $payload = json_encode($data);
-
-    $idtoupdate=7;
-
-    $url="http://localhost/chess/?" . http_build_query([
-        'method' => 'PATCH',
-        'id' => $idtoupdate
-    ]);
-
-    curl_setopt_array($ch, [
-        
-        CURLOPT_URL => $url,
-        CURLOPT_CUSTOMREQUEST => "PATCH",
-        CURLOPT_POSTFIELDS => $payload,
-        CURLOPT_HTTPHEADER => [
-            "Content-Type: application/json"
-        ]
-        
-    ]); 
-    
-    $response = curl_exec($ch);
-
-    $data = json_decode($response, true);
-
-    echo "STATUS: " . curl_errno($ch);
-    echo "<br>HTTP: " . curl_getinfo($ch, CURLINFO_HTTP_CODE) . "<br>";
+    require_once("src/login.php");
 
     if($response === false){
         die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
@@ -136,7 +37,7 @@
             }
         break;
         case 404:
-            echo "<strong>Not Found:</strong> " . htmlspecialchars($data["message"] ?? "User does not exist") . "<br>";
+            echo "Not Found: 404 " . htmlspecialchars($data["message"] ?? "User does not exist") . "<br>";
             break;
     }
     if(isset($data["message"])){
