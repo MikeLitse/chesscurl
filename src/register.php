@@ -1,5 +1,48 @@
 <?php 
+    $url="http://localhost/chess/";
 
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+        $ch = require __DIR__ . "/../initcurl.php";
+
+        //echo json_encode("it passed");
+        $data=[
+            "user" => filter_input(INPUT_POST, "user", FILTER_SANITIZE_SPECIAL_CHARS),
+            "pass" => filter_input(INPUT_POST, "pass", FILTER_SANITIZE_SPECIAL_CHARS),
+            "action" => "create"
+        ];
+
+        $payload = json_encode($data);
+
+        curl_setopt_array($ch, [
+
+            CURLOPT_URL => $url,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $payload,
+            CURLOPT_HTTPHEADER => [
+                "Content-Type: application/json",
+                "Accept: application/json"
+            ]
+        ]);
+
+        $response = curl_exec($ch);//can be var_dumped for debugging
+
+        if ($response === false) {
+            die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
+        }
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        $data = json_decode($response, true);//returns array
+
+        
+        if($httpcode === 201){
+            session_start();
+            $_SESSION["data"] = $data;
+            header("Location: home.php");
+            exit;
+        }
+
+    }
 ?>
 
-<?php require "creds.html"?>
+<?php require __DIR__ . "/../creds.html" ?>

@@ -1,6 +1,7 @@
 <?php
     session_start();
-    //echo "Welcome " . $_SESSION["user"];
+    $creds=$_SESSION["data"];
+    echo "Welcome " . $creds["user"]["username"] . "<br>" . $creds["message"] . "<br>";
 ?>
 
 <!DOCTYPE html>

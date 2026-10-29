@@ -23,7 +23,7 @@
         case 201://UPDATE OR DELETE
             break;
         case 401:
-            echo "User doesnt exist ";
+            echo "401: User doesnt exist ";
             break;
         case 404:
             echo "Not Found: 404 " . "<br>";
@@ -32,7 +32,6 @@
             echo "Error: Allow: GET, POST";
             break;
         case 422:
-            //$errors= json_decode($data, true);//returns assoc
             echo "Unprocessable Content: 422 " . "<br>" . "ERRORS: ";
             if(isset($data["errors"][0])){
                 echo $data["errors"][0] . " ";

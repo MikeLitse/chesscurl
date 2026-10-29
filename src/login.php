@@ -1,6 +1,5 @@
 <?php
-
-    
+   
     $url="http://localhost/chess/";
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -39,6 +38,7 @@
         
         if($httpcode === 200){
             session_start();
+            $_SESSION["data"] = $data;
             header("Location: src/home.php");
             exit;
         }
