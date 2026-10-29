@@ -5,7 +5,7 @@
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-        $ch = require "../initcurl.php";
+        $ch = require "initcurl.php";
 
         //echo json_encode("it passed");
         $data=[
@@ -27,7 +27,7 @@
             ]
         ]);
 
-        $response = curl_exec($ch);
+        $response = curl_exec($ch);//can be var_dumped for debugging
 
         if ($response === false) {
             die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
@@ -36,13 +36,10 @@
 
         $data = json_decode($response, true);//returns array
 
-        echo "<h3>Debug Output:</h3>";
-        echo "HTTP Status Code: <strong>$httpcode</strong><br>";
-        echo "Raw Response: <pre>" . htmlspecialchars((string)$response) . "</pre>";
         
         if($httpcode === 200){
             session_start();
-            header("Location: home.php");
+            header("Location: ./home.php");
             exit;
         }
 
