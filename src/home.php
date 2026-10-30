@@ -2,6 +2,46 @@
     session_start();
     $creds=$_SESSION["data"];
     echo "Welcome " . $creds["user"]["username"] . "<br>" . $creds["message"] . "<br>";
+    
+    var_dump($creds);
+    
+    $url="http://localhost/chess/";
+
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        if($_POST["action"] === "creategame"){
+            $ch = require __DIR__ . "/../initcurl.php";
+
+            //echo json_encode("it passed");
+            $data=[
+                "user" => 1,
+                "action" => "creategame"
+            ];
+
+            $payload = json_encode($data);
+
+            curl_setopt_array($ch, [
+
+                CURLOPT_URL => $url,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => $payload,
+                CURLOPT_HTTPHEADER => [
+                    "Content-Type: application/json",
+                    "Accept: application/json"
+                ]
+            ]);
+
+            $response = curl_exec($ch);
+
+            if ($response === false) {
+                die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
+            }
+            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+            $data = json_decode($response, true);//returns array
+
+            var_dump($data);
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -13,8 +53,9 @@
 </head>
 <body>
     <h>Welcome to home</h>
-    <form action="logout.php" method="POST">
-        <button>Logout</button>
+    <form  method="POST">
+        <button name="action" value="creategame">Create game</button>
+        <button formaction="logout.php">Logout</button>
     </form>
     
 </body>

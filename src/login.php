@@ -28,6 +28,8 @@
 
         $response = curl_exec($ch);//can be var_dumped for debugging
 
+        //var_dump($response);
+        //exit;
         if ($response === false) {
             die("CURL ERROR(" . curl_errno($ch) . "): " . curl_error($ch));
         }
