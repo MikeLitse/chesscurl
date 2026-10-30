@@ -4,6 +4,7 @@
     echo "Welcome " . $creds["user"]["username"] . "<br>" . $creds["message"] . "<br>";
     
     var_dump($creds);
+    echo"<br>";
     
     $url="http://localhost/chess/";
 
@@ -13,7 +14,7 @@
 
             //echo json_encode("it passed");
             $data=[
-                "user" => 1,
+                "id" => $creds["user"]["id"], //TODO change this to receive string id 
                 "action" => "creategame"
             ];
 
