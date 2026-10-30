@@ -13,13 +13,29 @@
 
     $ch = require "initcurl.php";
 
-    require_once("src/login.php");
+    $url="http://localhost/chess/";
+
+    curl_setopt_array($ch, [
+        
+        CURLOPT_URL => $url,
+        CURLOPT_HTTPGET => true
+        
+    ]); 
+
+    $response= curl_exec($ch);
+
+    //require_once("src/login.php");
 
     $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
+    var_dump($httpcode);
+    echo "<br>cURL Error: " . curl_error($ch);
+    //exit;
+
     switch ($httpcode){
         case 200://POST
-            break;
+            header("Location: src/login.php");
+            exit;
         case 201://UPDATE OR DELETE
             break;
         case 401:
@@ -40,6 +56,8 @@
                 echo $data["errors"][1] . " ";
             }
             break;
+
+    
 
     }
 ?>
